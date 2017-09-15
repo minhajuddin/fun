@@ -4,17 +4,37 @@ defmodule Fun do
   """
 
   @doc """
-  compose
+  See Fun.compose_l
+  """
+  defdelegate compose(functions), to: __MODULE__, as: :compose_l
+
+  @doc """
+  Composes input functions by applying them from left to right on the input
 
   ## Examples
 
-      iex> prefix = Fun.compose([&String.upcase/1, fn x -> String.slice(x, 0..2) end])
+      iex> prefix = Fun.compose_l([&String.upcase/1, fn x -> String.slice(x, 0..2) end])
       iex> prefix.("danny is awesome")
       "DAN"
 
   """
-  def compose(functions) when is_list(functions) do
+  def compose_l(functions) when is_list(functions) do
     fn arg -> compose_apply(functions, arg) end
+  end
+
+  @doc """
+  Composes input functions by applying them from right to left on the input
+
+  ## Examples
+
+      iex> add_and_mult = Fun.compose_r([&(&1 * 10), &(&1 + 5)])
+      iex> add_and_mult.(3)
+      80
+
+  """
+  def compose_r(functions) when is_list(functions) do
+    reversed_functions = Enum.reverse(functions)
+    fn arg -> compose_apply(reversed_functions, arg) end
   end
 
   def compose_apply([], arg), do: arg
