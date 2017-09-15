@@ -2,7 +2,12 @@ defmodule FunTest do
   use ExUnit.Case
   doctest Fun
 
-  describe "map_ok" do
+  describe "id" do
+    test "returns input" do
+      import Fun
+      assert 10 |> id == 10
+      assert 10 |> id |> id == 10 |> id
+    end
   end
 
   describe "compose_l" do
