@@ -33,8 +33,7 @@ defmodule Fun do
 
   """
   def compose_r(functions) when is_list(functions) do
-    reversed_functions = Enum.reverse(functions)
-    fn arg -> compose_apply(reversed_functions, arg) end
+    functions |> Enum.reverse |> compose_l
   end
 
   def compose_apply([], arg), do: arg
