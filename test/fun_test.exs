@@ -26,6 +26,14 @@ defmodule FunTest do
       assert 1..3 |> Enum.map(mult_5_and_add_3) == [8, 13, 18]
     end
 
+    test "allows using of operators" do
+      import Fun
+      rev_up = (&String.reverse/1) ~> (&String.upcase/1)
+      assert rev_up.("danny") == "YNNAD"
+      up = (&String.reverse/1) ~> (&String.upcase/1) ~> (&String.reverse/1)
+      assert up.("danny") == "DANNY"
+    end
+
   end
 
   describe "compose_r" do

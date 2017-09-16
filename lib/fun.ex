@@ -5,8 +5,23 @@ defmodule Fun do
 
   @doc """
   See Fun.compose_l
+
   """
   defdelegate compose(functions), to: __MODULE__, as: :compose_l
+
+  @doc """
+  See Fun.compose_l
+
+  ## Examples
+
+  #iex> rev_up = &String.reverse/1 | &String.upcase/1
+  #iex> rev_up.("danny")
+  #""
+
+  """
+  def fun1 ~> fun2 do
+    compose_l([fun1, fun2])
+  end
 
   @doc """
   Composes input functions by applying them from left to right on the input
